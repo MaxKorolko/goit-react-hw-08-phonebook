@@ -1,0 +1,33 @@
+.item {
+  display: flex;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.item:not(:last-child) {
+  margin-bottom: 15px;
+}
+
+.text {
+  margin-right: 20px;
+}
+
+.btn {
+  padding: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  background-color: rgb(248, 234, 220);
+}
+
+.btn:hover {
+  background-color: aqua;
+  transform: scale(1.2);
+}
