@@ -1,8 +1,11 @@
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import s from './Form.module.css';
+import { addContact } from '../../redux/contacts/contacts-actions';
 
-export default function Form({ onRiseContact }) {
+export default function Form() {
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -18,11 +21,7 @@ export default function Form({ onRiseContact }) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    onRiseContact({ id: nanoid(), name, number });
-    reset();
-  };
-
-  const reset = () => {
+    dispatch(addContact({ id: nanoid(), name, number }));
     setName('');
     setNumber('');
   };
