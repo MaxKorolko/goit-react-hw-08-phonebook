@@ -4,7 +4,7 @@ import s from './Filter.module.css';
 import { filterContacts } from '../../redux/contacts/contacts-actions';
 
 export default function Filter() {
-  const filter = useSelector(state => state.contacts.filter);
+  const filter = useSelector(state => state.filter);
   const dispatch = useDispatch();
   return (
     <label className={s.label}>

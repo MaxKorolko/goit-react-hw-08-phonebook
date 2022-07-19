@@ -1,36 +1,48 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from '../../redux/contacts/contacts-actions';
-
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import {
+  useGetContactsQuery,
+  useDeleteContactMutation,
+} from 'redux/contacts/contactsAPI';
 import s from './Contacts.module.css';
 
 export default function Contacts() {
-  const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.items);
-  const filter = useSelector(state => state.contacts.filter);
+  const [contacts, setContacts] = useState();
+  const { data, isLoading } = useGetContactsQuery();
+  const filter = useSelector(state => state.filter);
+
+  useEffect(() => {
+    data && setContacts(data);
+  }, [data]);
+
+  const [deleteContact] = useDeleteContactMutation();
 
   const getVisibleContacts = () =>
-    contacts.filter(({ name }) =>
+    contacts?.filter(({ name }) =>
       name.toLowerCase().includes(filter.toLowerCase())
     );
 
   return (
-    <ul className={s.list}>
-      {getVisibleContacts().map(({ id, name, number }) => {
-        return (
-          <li className={s.item} key={id}>
-            <p className={s.text}>
-              {name}&#32;:&#32;{number}
-            </p>
-            <button
-              className={s.btn}
-              type="button"
-              onClick={() => dispatch(deleteContact(id))}
-            >
-              Delete
-            </button>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      {isLoading && <p>LOADING......</p>}
+      <ul className={s.list}>
+        {getVisibleContacts()?.map(({ id, name, phone }) => {
+          return (
+            <li className={s.item} key={id}>
+              <p className={s.text}>
+                {name}&#32;:&#32;{phone}
+              </p>
+              <button
+                className={s.btn}
+                type="button"
+                onClick={() => deleteContact(id)}
+              >
+                Delete
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </>
   );
 }
