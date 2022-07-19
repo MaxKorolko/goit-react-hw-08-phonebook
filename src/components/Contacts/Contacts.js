@@ -1,3 +1,4 @@
+import Loader from 'components/Loader/Loader';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -9,13 +10,14 @@ import s from './Contacts.module.css';
 export default function Contacts() {
   const [contacts, setContacts] = useState();
   const { data, isLoading } = useGetContactsQuery();
+
+  const [deleteContact, { isLoading: loading }] = useDeleteContactMutation();
+
   const filter = useSelector(state => state.filter);
 
   useEffect(() => {
     data && setContacts(data);
   }, [data]);
-
-  const [deleteContact] = useDeleteContactMutation();
 
   const getVisibleContacts = () =>
     contacts?.filter(({ name }) =>
@@ -24,7 +26,8 @@ export default function Contacts() {
 
   return (
     <>
-      {isLoading && <p>LOADING......</p>}
+      {isLoading && <Loader />}
+      {loading && <Loader />}
       <ul className={s.list}>
         {getVisibleContacts()?.map(({ id, name, phone }) => {
           return (
