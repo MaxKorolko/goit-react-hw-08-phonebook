@@ -22,7 +22,6 @@ export default function App() {
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route
-            exact
             path="/"
             element={
               <PrivateRoute>
