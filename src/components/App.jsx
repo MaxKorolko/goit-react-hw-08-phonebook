@@ -2,10 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import PrivateRoute from './Routes/PrivateRoute';
 import PublicRoute from './Routes/PublicRoute';
-
-const Loader = lazy(() =>
-  import('../components/Loader/Loader' /* webpackChunkName: "loader" */)
-);
+import Loader from './Loader/Loader';
 
 const ContactsPage = lazy(() =>
   import('../pages/ContactsPage' /* webpackChunkName: "contacts" */)
