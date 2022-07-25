@@ -70,7 +70,7 @@ export default function Form() {
             required
           />
         </label>
-        <button type="submit">Add contact</button>
+        <button className={s.btn} type="submit">Add contact</button>
       </form>
       {isLoading && <Loader />}
     </>
