@@ -12,7 +12,7 @@ export default function Form() {
   const [addContact, { isLoading }] = useAddContactMutation();
   const { data } = useGetContactsQuery();
   const [contactName, setContactName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
 
   const handleInputChange = event => {
     const { name, value } = event.currentTarget;
@@ -20,7 +20,7 @@ export default function Form() {
       setContactName(value);
     }
     if (name === 'number') {
-      setPhone(value);
+      setNumber(value);
     }
   };
 
@@ -32,13 +32,13 @@ export default function Form() {
       reset();
       return alert(`${contactName} is already in contacts`);
     }
-    addContact({ name: contactName, phone });
+    addContact({ name: contactName, number });
     reset();
   };
 
   const reset = () => {
     setContactName('');
-    setPhone('');
+    setNumber('');
   };
 
   return (
@@ -63,7 +63,7 @@ export default function Form() {
             className={s.input}
             type="tel"
             name="number"
-            value={phone}
+            value={number}
             onChange={handleInputChange}
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"

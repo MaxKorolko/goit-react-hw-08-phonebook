@@ -13,7 +13,7 @@ export default function Contacts() {
 
   const [deleteContact, { isLoading: loading }] = useDeleteContactMutation();
 
-  const filter = useSelector(state => state.filter);
+  const filter = useSelector(state => state.contactBook.filter);
 
   useEffect(() => {
     data && setContacts(data);
@@ -29,11 +29,11 @@ export default function Contacts() {
       {isLoading && <Loader />}
       {loading && <Loader />}
       <ul className={s.list}>
-        {getVisibleContacts()?.map(({ id, name, phone }) => {
+        {getVisibleContacts()?.map(({ id, name, number }) => {
           return (
             <li className={s.item} key={id}>
               <p className={s.text}>
-                {name}&#32;:&#32;{phone}
+                {name}&#32;:&#32;{number}
               </p>
               <button
                 className={s.btn}

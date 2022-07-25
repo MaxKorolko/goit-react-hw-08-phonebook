@@ -5,6 +5,7 @@ import { filterContacts } from '../../redux/contacts/contacts-actions';
 
 export default function Filter() {
   const filter = useSelector(state => state.filter);
+
   const dispatch = useDispatch();
   return (
     <label className={s.label}>

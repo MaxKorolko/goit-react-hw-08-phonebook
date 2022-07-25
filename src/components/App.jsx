@@ -1,20 +1,63 @@
-import Filter from './Filter/Filter';
-import Form from './Form/Form';
-import Contacts from './Contacts/Contacts';
-import Section from './Section/Section';
-import Container from './Container/Container';
+import { lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import PrivateRoute from './Routes/PrivateRoute';
+import PublicRoute from './Routes/PublicRoute';
+
+const Loader = lazy(() =>
+  import('../components/Loader/Loader' /* webpackChunkName: "loader" */)
+);
+
+const ContactsPage = lazy(() =>
+  import('../pages/ContactsPage' /* webpackChunkName: "contacts" */)
+);
+
+const RegisterPage = lazy(() =>
+  import('../pages/RegisterPage' /* webpackChunkName: "register" */)
+);
+
+const LoginPage = lazy(() =>
+  import('../pages/LoginPage' /* webpackChunkName: "login" */)
+);
 
 export default function App() {
   return (
-    <Container>
-      <Section tittle="Phonebook">
-        <Form />
-      </Section>
-
-      <Section tittle="Contacts">
-        <Filter />
-        <Contacts />
-      </Section>
-    </Container>
+    <>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <ContactsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="register"
+            element={
+              <PublicRoute restricted>
+                <RegisterPage />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="login"
+            element={
+              <PublicRoute restricted>
+                <LoginPage />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <PrivateRoute>
+                <ContactsPage />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </Suspense>
+    </>
   );
 }
